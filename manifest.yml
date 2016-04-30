@@ -1,0 +1,12 @@
+applications:
+- memory: 512M
+  domain: mybluemix.net
+  path: .
+  #buildpack: https://github.com/bancha001/bluemix-buildpack-meteor
+  buildpack:  https://github.com/cloudfoundry-community/cf-meteor-buildpack.git
+  host: gtd
+  name: gtd
+  disk: 512M
+  services:
+    - mongo-gtd
+  instances: 3
