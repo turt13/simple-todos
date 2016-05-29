@@ -9,4 +9,4 @@ applications:
   disk: 512M
   services:
     - mongo-gtd
-  instances: 3
+  instances: 1

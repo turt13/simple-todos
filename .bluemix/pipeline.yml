@@ -13,10 +13,16 @@ stages:
     script: "#!/bin/bash\n\n#Install meteor if its not installed\nhash meteor 2>/dev/null\
       \ || curl https://install.meteor.com | /bin/sh\n\n#Add ~/.meteor to the path\
       \ to workaround non-sudo installation issue\nhash meteor 2>/dev/null || PATH=$PATH:$HOME/.meteor\n\
+      \n# remove default accounts pkgs\nmeteor remove accounts-ui accounts-password\n\
+      \n# get accounts-couchdb package\ngit clone https://github.com/mariobriggs/meteor-accounts-couchdb.git\n\
+      mv ./meteor-accounts-couchdb/packages/ .\nrm -rf meteor-accounts-couchdb/\n\
+      #set package_dirs to pickup accounts-couchdb package\nexport PACKAGE_DIRS=./packages/\n\
+      \n# add local accounts packages & cloudant:couchdb\nmeteor add accounts-password-couchdb\
+      \ accounts-password accounts-ui cloudant:couchdb\n\n "
 - name: deploy
   env:
-    CF_ORGANIZATION: phulme@au1.ibm.com
-    CF_SPACE: sandpit
+    CF_ORGANIZATION: mario.briggs@in.ibm.com
+    CF_SPACE: dev
   inputs:
   - type: job
     stage: build
